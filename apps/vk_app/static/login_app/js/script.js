@@ -365,7 +365,7 @@ $(document).ready(function(){
             },
             error: console.error
         });
-        setTimeout(checkNewMessages, 500000);
+        setTimeout(checkNewMessages, 5000);
     };
     checkNewMessages();
 
