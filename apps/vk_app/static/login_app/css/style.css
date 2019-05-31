@@ -1,0 +1,14 @@
+body{
+    display: flex;
+}
+h1{
+    margin: 20px;
+}
+.forms{
+    width: 100%;
+    margin: 50px;
+}
+p, .error{
+    color: red;
+    margin-left: 10px;
+}

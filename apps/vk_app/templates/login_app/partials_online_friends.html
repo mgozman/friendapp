@@ -1,0 +1,19 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'login_app/js/script.js' %}"></script>
+{% for friend in user.friends.all %}
+    {% if friend.online_status %}
+        <div class = friend_container_medium>
+            <img class = round_pics_big style = "background-image: url({{friend.profile_image.url}})">
+            <a href = '/{{friend.id}}' class = 'blue_link friend_name'>{{friend.first_name}} {{friend.last_name}}</a>
+            
+            {% if user.id == request.session.user_id %}
+                <form class = 'delete_online_friend_form' method = 'POST'>
+                    {% csrf_token %}
+                    <input type = hidden name = friend_id class = friend_id  value = {{friend.id}}>
+                    <button type = submit class = delete_friend>&#10005;</button>
+                </form>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endfor %}

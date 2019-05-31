@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_app/css/style.css' %}"> 
+    
+    <script>
+        $(document).ready(function(){
+            $('.input_reg').keyup(function(){
+                $.ajax({
+                    url:"process",
+                    method:"post",
+                    data:$('#register').serialize(),
+                    dataType: 'json',
+                    success:function(response){
+                        $('#first_name_error_div').empty().append(response.first_name || '');
+                        $('#last_name_error_div').empty().append(response.last_name || '');
+                        $('#email_error_div').empty().append(response.email || '');
+                        $('#password_error_div').empty().append(response.password || '');
+                        $('#password_confirm_error_div').empty().append(response.password_confirm || '');
+                        const success = Object.keys(response).length === 0;
+                        document.querySelector('.submit_reg').disabled = !success;
+                    }
+                });
+            });
+
+            $('.submit_reg').click(function(event){
+                event.preventDefault();
+                $.ajax({
+                    url:"adduser",
+                    method:"post",
+                    data:$('#register').serialize(),
+                    dataType: 'json',
+                    success:function(response){
+                        if (response.success) {
+                            window.location = '/' + response.user_id;
+                        } else {
+                            $('#register_success').empty();
+                            $('#first_name_error_div').empty().append(response.first_name || '');
+                            $('#last_name_error_div').empty().append(response.last_name || '');
+                            $('#email_error_div').empty().append(response.email || '');
+                            $('#password_error_div').empty().append(response.password || '');
+                            $('#password_confirm_error_div').empty().append(response.password_confirm || '');
+                        }
+                    }
+                });
+            });
+
+            $('.submit_login').click(function(event){
+                event.preventDefault();
+                $.ajax({
+                    url:"login",
+                    method:"post",
+                    data:$('#login_form').serialize(),
+                    dataType: 'json',
+                    success:function(response){
+                        if (response.success) {
+                            window.location = '/' + response.user_id;
+                        } else {
+                            $('#password_check').empty().append(response.password_check || response.login);
+                        }
+                    }
+                });
+            });
+        })
+    </script>
+</head>
+<body>
+    <div class = 'forms'>
+        <h2>Login and Registration</h2>
+        <h4>Register here!</h4>
+        <form method="POST" id = 'register'>
+            {% csrf_token %}
+            <input type="hidden" name = 'name' value="registration">
+            <div class="form-group">
+                <label>First Name: </label><span class=error id = first_name_error_div></span>
+                <input type="text" id = first_name_input class="form-control input_reg" placeholder="Enter First Name" name = "first_name">
+            </div>
+           
+            <div class="form-group">
+                <label>Last Name: </label>
+                <p id = last_name_error_div></p>
+                <input type="text" id = last_name_input class="form-control input_reg" placeholder="Enter Last Name" name = "last_name">
+            </div>
+            
+            <div class="form-group">
+                <label>Email address: </label>
+                <p id = email_error_div></p>
+                <input type="text" class="form-control input_reg" placeholder="Enter email" name = "email" id = 'email'>
+            </div>
+            
+            <div class="form-group">
+                <label>Password: </label>
+                <p id = password_error_div></p>
+                <input type="password" id = password_error_input class="form-control input_reg" passwordplaceholder="Enter password" name = "password">
+            </div>
+            
+            <div class="form-group">
+                <label>Confirm password: </label>
+                <p id = password_confirm_error_div></p>
+                <input type="password" id = password_confirm_error_input class="form-control input_reg" placeholder="Confirm password" name = "password_confirm">
+            </div>
+            <input type="submit" value="Register!" class="btn btn-info submit_reg" disabled/>
+        </form>
+    </div>
+    <div class = 'forms'>
+        <h4>Login here!</h4>
+        <form method="post" id="login_form">
+            {% csrf_token %}
+            <input type="hidden" name = 'name' value = 'login'>
+            <div class="form-group">
+                <label>Email address: </label>
+                <p id = login_error_div></p>
+                <input type="text" class="form-control" placeholder="Enter email" name = "login">
+            </div>
+         
+            <div class="form-group">
+                <label>Password: </label>
+                <input type="password" class="form-control" placeholder="Enter password" name = "pw">
+            </div>
+   
+            <input type="submit" value="Login!" class="btn btn-info submit_login"/>
+            <span id="password_check" class="error"></span>
+        </form>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_app/style_result.css' %}"> 
+    <script src="{% static 'login_app/js/script.js' %}"></script>
+    
+</head>
+<body>
+    {% csrf_token %}
+    <div class='menu main-menu'>
+        <a href = '/'><h3 class = white_text>Welcome, {{user_session.first_name}}!</h3></a>
+        <a class = white_text href="/logout">Log out</a>
+    </div>
+    <div id = page>
+        <div id = nav_menu>
+            <p class = nav_menu_p><a class = blue_link href = '/'>My Page</a></p>
+            <p class = nav_menu_p><a class = blue_link  >My News</a></p>
+            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/friends'>My Friends</a></p>
+            <p class = nav_menu_p><a class = blue_link id = my_mess href = '/{{user_session.id}}/messages'>My Messages</a></p>
+            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/pics'>My Photos</a></p>
+            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/groups'>My Groups</a></p>
+        </div>
+        <div id = 'middle_menu'>
+            <div class = "container" id = main_photo_img style = "background-image: url({{user.profile_image.url}})">
+                {% if user == user_session %}
+                    <figcaption id = upload_new_profile_pic >
+                        <form action = profile_pic method = 'POST' enctype="multipart/form-data" id = profile_pic_form>
+                            {% csrf_token %}
+                            &#8679;Select image to upload
+                            <input type = "file" name = fileToUpload id = fileToUpload accept="image/*">
+                        </form>
+                    </figcaption>
+                {% endif %}
+            </div>
+           
+            <div class = container>
+                <div class = all_friends>
+                    <a href = '{{user.id}}/friends' id = display_all_friends class = blue_link>Friends:</a>
+                    <div id = all_friends_container>
+                        {% if user.friends.all.0 %}
+                            <a href = '/{{user.friends.all.0.id}}' class = 'blue_link all_friends_container_small'>
+                                <div class = round_pic_friend style = "background-image: url({{user.friends.all.0.profile_image.url}})"></div>
+                                <p class = friend_name>{{user.friends.all.0.first_name}}</p>
+                            </a>
+                            <input type = hidden name = user_id value = {{user.friends.all.0.id}}>
+                        {% endif %}
+                        {% if user.friends.all.1 %}
+                            <a href = '/{{user.friends.all.1.id}}' class = 'blue_link all_friends_container_small'>
+                                <div class = round_pic_friend style = "background-image: url({{user.friends.all.1.profile_image.url}})"></div>
+                                <p class = friend_name>{{user.friends.all.1.first_name}}</p>
+                            </a>
+                            <input type = hidden name = user_id value = {{user.friends.all.1.id}}>
+                        {% endif %}
+                        {% if user.friends.all.2 %}
+                            <a href = '/{{user.friends.all.2.id}}' class = 'blue_link all_friends_container_small'>
+                                <div class = round_pic_friend style = "background-image: url({{user.friends.all.2.profile_image.url}})"></div>
+                                <p class = friend_name>{{user.friends.all.2.first_name}}</p>
+                            </a>
+                            <input type = hidden name = user_id value = {{user.friends.all.2.id}}>
+                        {% endif %}
+                        {% if user.friends.all.3 %}
+                            <a href = '/{{user.friends.all.3.id}}' class = 'blue_link all_friends_container_small'>
+                                <div class = round_pic_friend style = "background-image: url({{user.friends.all.3.profile_image.url}})"></div>
+                                <p class = friend_name>{{user.friends.all.3.first_name}}</p>
+                            </a>
+                            <input type = hidden name = user_id value = {{user.friends.all.3.id}}>
+                        {% endif %}
+                        {% if user.friends.all.4 %}
+                            <a href = '/{{user.friends.all.4.id}}' class = 'blue_link all_friends_container_small'>
+                                <div class = round_pic_friend style = "background-image: url({{user.friends.all.4.profile_image.url}})"></div>
+                                <p class = friend_name>{{user.friends.all.4.first_name}}</p>
+                            </a>
+                            <input type = hidden name = user_id value = {{user.friends.all.4.id}}>
+                        {% endif %}
+                        {% if user.friends.all.5 %}
+                            <a href = '/{{user.friends.all.5.id}}' class = 'blue_link all_friends_container_small'>
+                                <div class = round_pic_friend style = "background-image: url({{user.friends.all.5.profile_image.url}})"></div>
+                                <p class = friend_name>{{user.friends.all.5.first_name}}</p>
+                            </a>
+                            <input type = hidden name = user_id value = {{user.friends.all.5.id}}>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+                <hr>
+                <div class = all_friends>
+                    <a class = blue_link id = online_friends>Friends online:</a>
+                    <input type = hidden name = user_id value = {{user.id}}>
+                    <div class = all_friends_ico>
+                        {% for friend in user.friends.all %}
+                            {% if friend.online_status %}
+                                <a href = '/{{friend.id}}' class = 'blue_link all_friends_container_small'>
+                                    <div class = round_pic_friend style = "background-image: url({{friend.profile_image.url}})"></div>
+                                    <p class = friend_name>{{friend.first_name}}</p>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id = wall>
+            <div class = 'container wide_container'>
+                <div class = display_row>
+                    <h3>{{user.first_name}} {{user.last_name}}</h3>
+                    {% if user.online_status == True%}
+                        <span class = grey_text>Online</span>
+                    {% else %}
+                        <span class = grey_text>Offline</span>
+                    {% endif %}
+                </div>
+                {% if user == user_session %}
+                    <input type = text id = user_status class = 'grey_text edit_value' value = "{{user.status}}" placeholder = 'Update your status'>
+                {% else %}
+                    <input type = text id = user_status class = 'grey_text edit_value' value = "{{user.status}}" readonly = "readonly">
+                {% endif %}
+                <hr>
+                <div id = about_me>
+                    <table id = about_me_table>
+                        <tr>
+                            <td class = grey_text>City:</td>
+                            <td class = blue_text >
+                                <img class = edit_ico src="{% static 'login_app/images/pencil.jpg' %}" />
+                                {% if user == user_session %}
+                                    <input id = user_city class = edit_value type = text value = '{{user.city}}'>
+                                {% else %}
+                                    <input id = user_city class = edit_value type = text readonly="readonly" value = '{{user.city}}'>
+                                {% endif %}
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class = grey_text>Marrige:</td>
+                            <td class = blue_text>
+                                <img class = edit_ico src="{% static 'login_app/images/pencil.jpg' %}" />
+                                <select id = user_marrige class = edit_value name = marrige type = text value = '{{user.marrige}}'>
+                                    <option value = Married >Married</option>
+                                    <option value = Not Married >Not Married</option>
+                                    <option value = Single >Single</option>
+                                    <option value = Divorced >Divorced</option>
+                                </select>
+                                <script>
+                                    document.getElementById("user_marrige").value = '{{user.marrige}}';
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class = grey_text>School:</td>
+                            <td class = blue_text>
+                                <img class = edit_ico src="{% static 'login_app/images/pencil.jpg' %}" />
+                                <input id = user_school class = edit_value name = school type = text value = '{{user.school}}'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class = grey_text>Phone:</td>
+                            <td class = blue_text>
+                                <img class = edit_ico src="{% static 'login_app/images/pencil.jpg' %}" />
+                                <input id = user_phone class = edit_value name = phone type = text  value = '{{user.phone}}'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class = grey_text>Skype:</td>
+                            <td class = blue_text>
+                                <img class = edit_ico src="{% static 'login_app/images/pencil.jpg' %}" />
+                                <input id = user_skype class = edit_value name = skype type = text pattern="[0-9]{10}" value = '{{user.skype}}'>
+                            </td>
+                        </tr>
+
+                        {% if user.id != request.session.id %}
+                            <script type="text/javascript">
+                                document.getElementsByClassName('.edit_ico').display = "block";            
+                            </script>
+                        {% endif %}
+                    </table>
+                    <hr>
+                    <table id = amount_friends_table>
+                        <tr>
+                            <th><a class = blue_link href = '{{user.id}}/friends'>{{user.friends.all|length}}</a></th>
+                            <th><a class = blue_link href = '{{user.id}}/pics'>{{user.images.all|length}}</a></th>
+                            <th><a class = blue_link href = '{{user.id}}/groups'>{{user.my_groups.all|length}}</a></th>
+                        </tr>
+                        {% if user.friends.all|length == 1 %}
+                            <tr><td><a class = blue_link href = '{{user.id}}/friends'>friend</a></td>
+                        {% else %}
+                            <tr><td><a class = blue_link href = '{{user.id}}/friends'>friends</a></td>
+                        {% endif %}
+                        
+                        {% if user.images.all|length == 1 %}
+                            <td><a class = 'blue_link' href = '{{user.id}}/pics'>picture</a></td>
+                        {% else %}
+                            <td><a class = 'blue_link' href = '{{user.id}}/pics'>pictures</a></td>
+                        {% endif %}
+
+                        {% if user.my_groups.all|length == 1 %}
+                            <td><a class = blue_link href = '{{user.id}}/groups'>group</a></td></tr>
+                        {% else %}
+                            <td><a class = blue_link href = '{{user.id}}/groups'>groups</a></td></tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+            <div class = 'container wide_container'>
+                <div id = upload_pic_div>
+                    {% if user == user_session %}
+                        <a class = 'half_opacity_text display_pics' href = '/{{user.id}}/pics'>My pictures:</a>
+                        <div id = my_pic_div class = half_opacity_text>
+                            &#8679;Upload
+                        </div>
+                        <form action = my_pic method = 'POST' enctype="multipart/form-data" id = my_pic_form>
+                            {% csrf_token %}
+                            <input type = "file" name = myFileToUpload id = myFileToUpload accept="image/*" class = 'half_opacity_text'>
+                            <input type = hidden name = user_id value = {{user.id}}>
+                        </form>
+                    {% else %}
+                        <a class = 'half_opacity_text display_pics' href = '/{{user.id}}/pics'>{{user.first_name}}'s' pictures:</a>
+                    {% endif %}
+
+                </div>
+                <div id = all_pics>
+                    <div class = small_pics style = "background-image: url({{pics.0.image.url}})"></div>
+                    <div class = small_pics style = "background-image: url({{pics.1.image.url}})"></div>
+                    <div class = small_pics style = "background-image: url({{pics.2.image.url}})"></div>
+                    <div class = small_pics style = "background-image: url({{pics.3.image.url}})"></div>
+                    <div class = small_pics style = "background-image: url({{pics.4.image.url}})"></div>
+                </div>
+            </div>
+            
+            <form id = 'post' class = 'container wide_container whats_new' method = 'POST'>
+                {% csrf_token %}
+                <input type = hidden name = 'users_where_to_post' class = users_where_to_post value = {{user.id}}>
+                
+                <div class = round_pics style = "background-image: url({{user_session.profile_image.url}})"></div>
+                <textarea name = 'post' placeholder="What's new?"></textarea>
+                <button type = submit class = send_post><img class = 'like send_post' src="{% static 'login_app/images/send.png' %}" /></button>
+            </form>
+
+            <div class = 'container wide_container'>
+                <div class = posts_menu>
+                    <div class = posts_menu_text>
+                        <a id = display_all_posts class = opacity_1>All Posts</a>
+                        <input type = hidden class = user_where_posted value = {{user.id}}>
+                        <hr class = 'posts_menu_line line_all_posts'>
+                    </div>
+                    <div class = posts_menu_text>
+                        {% if user == user_session %}
+                            <a id = display_my_posts class = half_opacity_text>My Posts</a>
+                        {% else %}
+                            <a id = display_my_posts class = half_opacity_text>{{user.first_name}}'s Posts</a>
+                        {% endif %}
+                        <input type = hidden class = user_where_posted value = {{user.id}}>
+                        <hr class = 'posts_menu_line line_my_posts'>
+                    </div>
+                </div>
+                <hr>
+                <div id = "all_posts">
+                    {% for post in posts %}
+                        <div class = post_container>
+                            <div>
+                                <div class = round_pics style = "background-image: url({{post.user_who_created.profile_image.url}})"></div>
+                            </div>
+                            <div class = post_content>
+                                <div class = post_container>
+                                    <div>
+                                        <a href = '/{{post.user_who_created.id}}' class = blue_link>{{post.user_who_created.first_name}} {{post.user_who_created.last_name}}:</a>
+                                        <p class = 'grey_text'>({{post.updated_at|date:"M d, Y"}})</p>
+                                    </div>
+                                    <div>
+                                        {% if post.user_who_created == user_session or post.user_where_posted == user_session %}
+                                            <form class = 'delete_post_form' method = 'POST'>
+                                                {% csrf_token %}
+                                                <input type = hidden name = post_id class = post_id  value = {{post.id}}>
+                                                <button type = submit class = 'delete_post'>&#10005;</button>
+                                            </form>
+                                        {% endif %} 
+                                    </div>
+                                </div>
+                                <div>
+                                    {{post.post}}
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class = posts_summary_top>
+                            <form class = like_summary method = "POST">
+                                {% csrf_token %}
+                                <input type = hidden name = post_id value = "{{post.id}}">
+                                {% if user in post.users_who_liked.all %}
+                                    <img class = 'like_post' style = "opacity: 1" src="{% static 'login_app/images/like.png' %}" />
+                                {% else %}
+                                    <img class = 'like_post' src="{% static 'login_app/images/like.png' %}" />
+                                {% endif %}
+                                <p>{{post.users_who_liked.all|length}}</p>
+                            </form>
+                        
+                            <div  class =comment_summary>
+                                <img class = like style = "opacity:0.6" src="{% static 'login_app/images/comment.png' %}" />
+                                <p>{{post.all_comments.all|length}}</p>
+                            </div>
+                        </div>
+                        <div class = whats_new>
+                            <form method = 'post' class = new_comment_form>
+                                {% csrf_token %}
+                                <div class = round_pics style = "background-image: url({{user_session.profile_image.url}})"></div>
+                            
+                                <input type = hidden class = post_id name = post_id value = "{{post.id}}">
+                                <input type = text name = comment class = new_comment>
+                                <button type = submit class = send_comment><img class = send_comment src="{% static 'login_app/images/send.png' %}" /></button>
+                            </form>
+                        </div>
+                    
+                        {% for comment in post.all_comments.all %}
+                            <div class = comments>
+                                <div>
+                                    <div class = round_pics style = "background-image: url({{comment.user_who_created.profile_image.url}})"></div>
+                                </div>
+                                <div class = comment_container>
+                                    <div>
+                                        <a href = '/{{comment.user_who_created.id}}' class = blue_link>{{comment.user_who_created.first_name}} {{comment.user_who_created.last_name}}:</a>
+                                        <span class =  grey_text>({{comment.updated_at|date:"M d, Y"}})</span>
+                                        <p>{{comment.comment}}</p>
+                                    </div>
+                                    
+                                    {% if user_session == comment.user_who_created %}
+                                    <form method = 'POST'>
+                                        {% csrf_token %}
+                                        <input type = hidden name = comment_id value = {{comment.id}}>
+                                        <img class = like_comment src="{% static 'login_app/images/like.png' %}" />
+                                        <a class = 'delete_comment'>&#10005;</a>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if user != user_session %}
+        <script>
+            $("#user_marrige").attr("disabled", true);
+            $('.edit_value').attr("readonly", "readonly");
+            $('.edit_ico').hide();
+        </script>
+    {% endif %}
+</body>
+</html>

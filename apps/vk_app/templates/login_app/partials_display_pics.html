@@ -1,0 +1,13 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'login_app/js/script.js' %}"></script>
+{% for pic in pics %}
+    <div class = pics_container style = "background-image: url({{pic.image.url}})">
+        {% if user == user_session %}
+            <div class = delete_pic >
+                &#10005;
+            </div>
+            <input type = hidden name = pic_id value = "{{pic.id}}">
+        {% endif %}
+    </div>
+{% endfor %}

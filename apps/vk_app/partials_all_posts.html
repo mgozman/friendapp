@@ -1,0 +1,29 @@
+{% for post in posts %}
+    <div class = whats_new id = post_container>
+        <img class = round_pics src = "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80">
+        <p class = grey_text >{{post.user_who_created.first_name}} {{post.user_who_created.last_name}} (2 days ago):</p>
+        <p>{{post.post}}</p>
+    </div>
+    <div class = posts_summary_top>
+        <div class = posts_summary>
+            <img class = like src="{% static 'login_app/images/like.png' %}" />
+            <p>{{post.users_who_liked|length}}</p>
+        </div>
+        <div  class =posts_summary>
+            <img class = like src="{% static 'login_app/images/comment.png' %}" />
+            <p>{{post.all_comments|length}}</p>
+        </div>
+    </div>
+    <hr>
+    {% for comments in post.all_comments.all }
+        <div class = comments>
+            <div>
+                <img class = round_pics src = "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80">
+            </div>
+            <div>
+                <p>{{comment.comment}}</p>
+                <p class = grey_text>22 febr 2017</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}

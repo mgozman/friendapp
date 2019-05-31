@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_app/style_result.css' %}"> 
+    <script src="{% static 'login_app/js/script.js' %}"></script>
+    
+</head>
+<body>
+    {% csrf_token %}
+    <div class='menu main-menu'>
+        <a href = '/'><h3 class = white_text>Welcome, {{user.first_name}}!</h3></a>
+        <a class = white_text href="/logout">Log out</a>
+    </div>
+    <div id = page>
+        <div id = nav_menu>
+                <p class = nav_menu_p><a class = blue_link href = '/'>My Page</a></p>
+                <p class = nav_menu_p><a class = blue_link  >My News</a></p>
+                <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/friends'>My Friends</a></p>
+                <p class = nav_menu_p><a class = blue_link id = my_mess href = '/{{user_session.id}}/messages'>My Messages</a></p>
+                <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/groups'>My Groups</a></p>
+        </div>
+        <div id = wall>
+            <div class = 'container wide_container'>
+                <div class = "container" id = group_photo style = "background-image: url({{group.profile_image.url}})">
+                    {% if group.user_who_created == user_session %}
+                        <figcaption id = upload_new_group_pic >
+                            <form action = profile_pic method = 'POST' enctype="multipart/form-data" id = group_pic_form>
+                                {% csrf_token %}
+                                &#8679;Select image to upload
+                                <input type = "file" name = fileToUploadGroup id = fileToUploadGroup accept="image/*">
+                                <input type = hidden name = group_id value = {{group.id}}>
+                            </form>
+                        </figcaption>
+                    {% endif %}
+                </div>
+                <form method = POST id = create_group_form>
+                    {% csrf_token %}
+                    <input type = hidden name = group_id value = {{group.id}}>
+                    <input class = 'group_title group_edit' type = text name = title value = "{{group.title}}" placeholder="Group title">
+                    <input class = "group_desc group_edit" type = text name = desc value = "{{group.desc}}" placeholder="Group description">
+                
+                    {% if user_session == group.user_who_created %}
+                        <button class = follow>You are admin</button>
+                    {% else %}
+                        {% if user_session in group.users.all %}
+                            <a href = '/{{user.id}}/unfollow/group/{{group.id}}'class = follow>Unfollow</a>
+                        {% else %}
+                            <a href = '/{{user.id}}/follow/group/{{group.id}}' class = follow>Follow</a>
+                        {% endif %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if user != group.user_who_created %}
+        <script>
+            $('.group_edit').attr("readonly", "readonly");
+        </script>
+    {% endif %}
+</body>
+</html>

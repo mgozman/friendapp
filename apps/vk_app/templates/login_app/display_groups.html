@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_app/style_result.css' %}"> 
+    <script src="{% static 'login_app/js/script.js' %}"></script>
+    
+</head>
+<body>
+    {% csrf_token %}
+    <div class='menu main-menu'>
+        <a href = '/'><h3 class = white_text>Welcome, {{user_session.first_name}}!</h3></a>
+        <a class = white_text href="/logout">Log out</a>
+    </div>
+    <div id = page>
+        <div id = nav_menu>
+            <p class = nav_menu_p><a class = blue_link href = '/'>My Page</a></p>
+            <p class = nav_menu_p><a class = blue_link  >My News</a></p>
+            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/friends'>My Friends</a></p>
+            <p class = nav_menu_p><a class = blue_link id = my_mess href = '/{{user_session.id}}/messages'>My Messages</a></p>
+            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/pics'>My Photos</a></p>
+            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/groups'>My Groups</a></p>
+        </div>
+        <div id = wall>
+            <div class = 'container full_container'>
+                <div class = posts_menu>
+                    <div class = posts_menu_text>
+                        <a id = display_my_groups class = opacity_1>My Groups</a>
+                        <hr class = 'posts_menu_line line_groups'>
+                    </div>
+                    <div class = posts_menu_text>
+                        <a id = display_admin_groups class = half_opacity_text>Admin Groups</a>
+                        <hr class = 'posts_menu_line line_admin_groups'>
+                    </div>
+                    <div class = posts_menu_text>
+                        <a id = display_all_groups class = half_opacity_text>Other Groups</a>
+                        <hr class = 'posts_menu_line line_all_groups'>
+                    </div>
+                    <div class = posts_menu_text>
+                        <a href = '/{{user_session.id}}/create_group' id = create_group class = half_opacity_text>Create</a>
+                        <hr class = 'posts_menu_line line_create_groups'>
+                    </div>
+                </div>
+                <div id = group_container>
+                    {% for group in my_groups %}
+                        <a class = all_groups href = '/{{user_session.id}}/display_group/{{group.id}}'>
+                            <div class = round_pics_big style = "background-image: url({{group.profile_image.url}})"></div>
+                            <div class = display_group>
+                                <h4>{{group.title}}</h4>
+                                <p>{{group.desc}}</p>
+                            </div>
+                        </a>
+                        <input type = hidden name = group_id value = "{{group.id}}">
+                        <input type = hidden name = user_id value = "{{user.id}}">
+                        {% if user_session == group.user_who_created %}
+                            <a class = 'delete_group unfollow_group half_opacity_text'>Delete</a>
+                        {% else %}
+                            {% if user_session in group.users.all %}
+                                <a class = 'unfollow_button unfollow_group half_opacity_text'>Unfollow</a>
+                            {% else %}
+                                <a class = 'follow_button unfollow_group half_opacity_text'>Follow</a>
+                            {% endif %}
+                        {% endif %}
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

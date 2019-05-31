@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Full name</th>
+            <th>Action</th>
+        </tr>
+        {% for friend in friends%}
+            {% if friend != user%}
+            <tr>
+                <td>{{friend.first_name}} {{friend.last_name}}</td>
+                <td><a href = '/add_to_friend/{{friend.id}}'>Add to friend</a></td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</body>
+</html>

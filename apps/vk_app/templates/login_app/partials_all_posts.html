@@ -1,0 +1,80 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'login_app/js/script.js' %}"></script>
+{% for post in posts %}
+    <div class = post_container>
+        <div>
+            <div class = round_pics style = "background-image: url({{post.user_who_created.profile_image.url}})"></div>
+        </div>
+        <div class = post_content>
+            <div class = post_container>
+                <div>
+                    <a href = '/{{post.user_who_created.id}}' class = blue_link>{{post.user_who_created.first_name}} {{post.user_who_created.last_name}}:</a>
+                    <p class = 'grey_text'>({{post.updated_at|date:"M d, Y"}})</p>
+                </div>
+                <div>
+                    {% if post.user_who_created == user_session or post.user_where_posted == user_session %}
+                        <form class = 'delete_post_form' method = 'POST'>
+                            {% csrf_token %}
+                            <input type = hidden name = post_id class = post_id  value = {{post.id}}>
+                            <button type = submit class = 'delete_post'>&#10005;</button>
+                        </form>
+                    {% endif %} 
+                </div>
+            </div>
+            <div>
+                {{post.post}}
+            </div>
+        </div>
+    </div>
+    <div class = posts_summary_top>
+        <form class = like_summary method = "POST">
+            {% csrf_token %}
+            <input type = hidden name = post_id value = "{{post.id}}">
+            {% if user in post.users_who_liked.all %}
+                <img class = 'like_post' style = "opacity: 1" src="{% static 'login_app/images/like.png' %}" />
+            {% else %}
+                <img class = 'like_post' src="{% static 'login_app/images/like.png' %}" />
+            {% endif %}
+            <p>{{post.users_who_liked.all|length}}</p>
+        </form>
+    
+        <div  class =comment_summary>
+            <img class = like style = "opacity:0.6" src="{% static 'login_app/images/comment.png' %}" />
+            <p>{{post.all_comments.all|length}}</p>
+        </div>
+    </div>
+    <div class = whats_new>
+        <form method = 'post' class = new_comment_form>
+            {% csrf_token %}
+            <div class = round_pics style = "background-image: url({{user_session.profile_image.url}})"></div>
+            <input type = hidden class = post_id name = post_id value = "{{post.id}}">
+            <input type = text name = comment class = new_comment>
+            <button type = submit class = send_comment><img class = send_comment src="{% static 'login_app/images/send.png' %}" /></button>
+        </form>
+    </div>
+    
+    {% for comment in post.all_comments.all %}
+        <div class = comments>
+            <div>
+                <div class = round_pics style = "background-image: url({{comment.user_who_created.profile_image.url}})"></div>
+            </div>
+            <div class = comment_container>
+                <div>
+                    <a href = '/{{comment.user_who_created.id}}' class = blue_link>{{comment.user_who_created.first_name}} {{comment.user_who_created.last_name}}:</a>
+                    <span class =  grey_text>({{comment.updated_at|date:"M d, Y"}})</span>
+                    <p>{{comment.comment}}</p>
+                </div>
+                {% if user_session == comment.user_who_created %}
+                <form method = 'POST'>
+                    {% csrf_token %}
+                    <input type = hidden name = comment_id value = {{comment.id}}>
+                    <img class = like_comment src="{% static 'login_app/images/like.png' %}" />
+                    <a class = 'delete_comment'>&#10005;</a>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    <hr>
+{% endfor %}

@@ -1,0 +1,28 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'login_app/js/script.js' %}"></script>
+<div class = 'wide_container'>
+{% if messages|length == 0 %}
+    <p>You don't have any message with this friend</p>
+{% else %}
+    {% for message in messages %}
+        <div class = message_container>
+            <img class = round_pics src = "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80">
+            <div>
+                <p>{{message.user_from.first_name}} {{message.user_from.last_name}}:</p>
+                <p class = grey_text>{{message.created_at|date:"Y M d"}}</p>
+                <p class = message>{{message.message}}</p>
+            </div>
+            <hr>
+        </div>
+    {% endfor %}
+{% endif %}
+</div>
+<div class = 'wide_container'>
+    <form method = POST class = new_message_form>
+        {% csrf_token %}
+        <textarea name = message placeholder="Type your message"></textarea>
+        <input type = hidden name = friend_id value = {{user_to.id}}>
+        <img type = submit class = 'send_mess' style = "border:none" src="{% static 'login_app/images/send.png' %}" />
+    </form>
+</div>

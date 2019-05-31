@@ -1,0 +1,25 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'login_app/js/script.js' %}"></script>
+<link rel="stylesheet" href="{% static 'login_app/style_result.css' %}"> 
+{% for group in my_groups %}
+    <a class = all_groups href = '/{{user_session.id}}/display_group/{{group.id}}'>
+        <div class = round_pics_big style = "background-image: url({{group.profile_image.url}})"></div>
+        <div class = display_group>
+            <h4>{{group.title}}</h4>
+            <p>{{group.desc}}</p>
+        </div>
+    </a>
+    <input type = hidden name = group_id value = "{{group.id}}">
+    <input type = hidden name = user_id value = "{{user.id}}">
+    {% if user_session == group.user_who_created %}
+        <a class = 'delete_group unfollow_group half_opacity_text'>Delete</a>
+    {% else %}
+        {% if user_session in group.users.all %}
+            <a class = 'unfollow_button unfollow_group half_opacity_text'>Unfollow</a>
+        {% else %}
+            <a class = 'follow_button unfollow_group half_opacity_text'>Follow</a>
+        {% endif %}
+    {% endif %}
+    <hr>
+{% endfor %}
