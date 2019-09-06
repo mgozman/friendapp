@@ -23,13 +23,13 @@
     </div>
     <div id = page>
         <div id = nav_menu>
-            <p class = nav_menu_p><a class = blue_link href = '/'>My Page</a></p>
-            <p class = nav_menu_p><a class = blue_link  >My News</a></p>
-            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/friends'>My Friends</a></p>
-            <p class = nav_menu_p><a class = blue_link id = my_mess href = '/{{user_session.id}}/messages'>My Messages</a></p>
-            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/pics'>My Photos</a></p>
-            <p class = nav_menu_p><a class = blue_link href = '/{{user_session.id}}/groups'>My Groups</a></p>
+            <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/home.png' %}" /><a class = 'nav_menu_p blue_link' href = '/'>My Page</a></div>
+            <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/friend.png' %}" /><a class = 'nav_menu_p blue_link' href = '/{{user_session.id}}/friends'>My Friends</a></div>
+            <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/messages.png' %}" /><a class = 'nav_menu_p blue_link' href = '/{{user_session.id}}/messages'>My Messages</a></div>
+            <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/photo.png' %}" /><a class = 'nav_menu_p blue_link' href = '/{{user_session.id}}/pics'>My Photos</a></div>
+            <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/groups.png' %}" /><a class = 'nav_menu_p blue_link' href = '/{{user_session.id}}/groups'>My Groups</a></div>
         </div>
+
         <div id = 'middle_menu'>
             <div class = "container" id = main_photo_img style = "background-image: url({{user.profile_image.url}})">
                 {% if user == user_session %}

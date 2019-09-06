@@ -462,4 +462,5 @@ def delete_pic(request, id, id_pic):
     print("I GOR USER AND PIC")
     pic.delete()
     pics = user.images.all().order_by("-created_at")
+    user_session = users.objects.get(email = request.session['email'])
     return render(request, 'login_app/partials_display_pics.html', {'user':user, 'pics':pics})
