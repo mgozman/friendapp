@@ -7,7 +7,7 @@
 {% else %}
     {% for message in messages %}
         <div class = message_container>
-            <img class = round_pics src = "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80">
+            <img class = round_pics style = "background-image: url({{message.user_from.profile_image.url}})">
             <div>
                 <p>{{message.user_from.first_name}} {{message.user_from.last_name}}:</p>
                 <p class = grey_text>{{message.created_at|date:"Y M d"}}</p>

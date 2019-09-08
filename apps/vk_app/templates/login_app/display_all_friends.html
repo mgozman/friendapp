@@ -23,11 +23,11 @@
     </div>
     <div id = page>
         <div id = nav_menu>
-                <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/home.png' %}" /><a class = 'nav_menu_p blue_link' href = '/'>My Page</a></div>
-                <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/friend.png' %}" /><a class = 'nav_menu_p blue_link' href = '/{{user_session.id}}/friends'>My Friends</a></div>
-                <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/messages.png' %}" /><a class = 'nav_menu_p blue_link' href = '/{{user_session.id}}/messages'>My Messages</a></div>
-                <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/photo.png' %}" /><a class = 'nav_menu_p blue_link' href = '/{{user_session.id}}/pics'>My Photos</a></div>
-                <div><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/groups.png' %}" /><a class = 'nav_menu_p blue_link' href = '/{{user_session.id}}/groups'>My Groups</a></div>
+            <div><a class = 'blue_link' href = '/'><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/home.png' %}" /><span class = nav_menu_p>My Page</span></a></div>
+            <div><a class = 'blue_link' href = '/{{user_session.id}}/friends'><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/friend.png' %}" /><span class = nav_menu_p>My Friends</span></a></div>
+            <div><a class = 'blue_link' href = '/{{user_session.id}}/messages' ><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/messages.png' %}" /><span id = my_mess class = nav_menu_p>My Messages</span></a></div>
+            <div><a class = 'blue_link' href = '/{{user_session.id}}/pics'><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/photo.png' %}" /><span class = nav_menu_p>My Photos</span></a></div>
+            <div><a class = 'blue_link' href = '/{{user_session.id}}/groups'><img class = ico style = "opacity:0.6" src="{% static 'login_app/images/groups.png' %}" /><span class = nav_menu_p>My Groups</span></a></div>
         </div>
         <div id = wall>
             <div class = 'container wide_container'>

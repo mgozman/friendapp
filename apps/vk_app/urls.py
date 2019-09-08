@@ -58,5 +58,4 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/delete_pic/(?P<id_pic>\d+)$', views.delete_pic),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
