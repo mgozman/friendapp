@@ -1,6 +1,6 @@
 bcrypt==3.1.6
 cffi==1.12.3
-Django==2.2.1
+Django==2.2.22
 django-debug-toolbar==1.11
 django-render-partial==0.4
 Pillow==6.0.0
